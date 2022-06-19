@@ -14,7 +14,6 @@ public class RoleConvert {
     public RoleDTO entityToDto(Role role) {
         ModelMapper mapper = new ModelMapper();
         return mapper.map(role, RoleDTO.class);
-
     }
 
     public List<RoleDTO> entityToDto(List<Role> roles) {

@@ -13,11 +13,8 @@ import java.util.stream.Collectors;
 public class RoomConvert {
 
     public RoomDTO entityToDto(Room room) {
-
         ModelMapper mapper = new ModelMapper();
-
         return mapper.map(room, RoomDTO.class);
-
     }
 
     public List<RoomDTO> entityToDto(List<Room> rooms) {

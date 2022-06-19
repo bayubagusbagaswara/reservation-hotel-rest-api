@@ -21,7 +21,6 @@ public class DepartmentConvert {
                 .collect(Collectors.toList());
     }
 
-
     public Department dtoToEntity(DepartmentDTO dto) {
         ModelMapper mapper = new ModelMapper();
         return mapper.map(dto, Department.class);
