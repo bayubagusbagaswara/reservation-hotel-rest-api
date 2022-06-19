@@ -1,6 +1,6 @@
 # Reservation REST API
 
-Build Rest CRUD API for a Reservation.
+Build Rest CRUD API for a Reservation Room.
 
 ## Technologies
 
