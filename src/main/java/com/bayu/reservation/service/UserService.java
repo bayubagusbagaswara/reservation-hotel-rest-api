@@ -2,8 +2,8 @@ package com.bayu.reservation.service;
 
 import com.bayu.reservation.dto.BookingDTO;
 import com.bayu.reservation.dto.UserDTO;
+import com.bayu.reservation.util.Form;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface UserService {
@@ -30,7 +30,7 @@ public interface UserService {
 
     List<UserDTO> fetchUsersByRole(String roleName);
 
-    String bookRoom();
+    String bookRoom(Form.UserBookingForm form, Long id);
 
     String cancelBooking(Long id, String Code);
 
