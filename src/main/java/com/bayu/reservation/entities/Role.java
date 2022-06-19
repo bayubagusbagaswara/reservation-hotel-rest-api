@@ -28,15 +28,15 @@ public class Role extends DateAudit implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "name", length = 20, nullable = false)
-    private RoleName name;
+    private RoleName roleName;
 
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     @Column(name = "status_record", nullable = false)
     private StatusRecord statusRecord = StatusRecord.ACTIVE;
 
-    public Role(RoleName name) {
-        this.name = name;
+    public Role(RoleName roleName) {
+        this.roleName = roleName;
     }
 
     @JsonIgnore
