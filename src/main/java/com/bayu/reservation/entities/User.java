@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,6 +34,7 @@ public class User extends DateAudit implements Serializable {
 
     private String username;
 
+    @Email
     @Column(unique = true, length = 40, nullable = false)
     private String email;
 
