@@ -1,10 +1,13 @@
 package com.bayu.reservation.controller;
 
+import com.bayu.reservation.dto.RoleDTO;
 import com.bayu.reservation.service.RoleService;
 import com.bayu.reservation.service.UserService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -19,4 +22,18 @@ public class RoleController {
         this.roleService = roleService;
         this.userService = userService;
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<RoleDTO>> findAllRoles() {
+        List<RoleDTO> roleDTOS = roleService.listAll();
+        return new ResponseEntity<>(roleDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("{/id}")
+    public ResponseEntity<RoleDTO> findRoleById(@PathVariable(name = "id") Long roleId) {
+        RoleDTO roleDTO = roleService.getById(roleId);
+        return new ResponseEntity<>(roleDTO, HttpStatus.OK);
+    }
+
+
 }
