@@ -3,10 +3,7 @@ package com.bayu.reservation.controller;
 import com.bayu.reservation.dto.DepartmentDTO;
 import com.bayu.reservation.service.DepartmentService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,11 +18,16 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping("/all")
+    @GetMapping(value = "/all")
     public ResponseEntity<List<DepartmentDTO>> getAllDepartments() {
         List<DepartmentDTO> departmentDTOS = departmentService.listAll();
         return ResponseEntity.ok().body(departmentDTOS);
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<DepartmentDTO> getDepartmentById(@PathVariable(name = "id") Long departmentId) {
+        DepartmentDTO departmentDTO = departmentService.getById(departmentId);
+        return ResponseEntity.ok().body(departmentDTO);
+    }
 
 }
