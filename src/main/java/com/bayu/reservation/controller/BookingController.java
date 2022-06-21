@@ -71,4 +71,16 @@ public class BookingController {
         return new ResponseEntity<>(bookingDTOList, HttpStatus.OK);
     }
 
+    @PostMapping("/confirm/{id}")
+    public ResponseEntity<String> confirmBooking(@RequestBody boolean confirmed, @PathVariable(name = "id") Long bookingId) {
+        bookingService.confirmBooking(bookingId, confirmed);
+        if (confirmed)
+            return ResponseEntity.ok().body("confirmed");
+        else {
+            return ResponseEntity.ok().body("not confirmed!");
+        }
+    }
+
+
+
 }
