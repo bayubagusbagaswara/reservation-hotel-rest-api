@@ -1,6 +1,7 @@
 package com.bayu.reservation.controller;
 
 import com.bayu.reservation.dto.BookingDTO;
+import com.bayu.reservation.dto.UserDTO;
 import com.bayu.reservation.service.BookingService;
 import com.bayu.reservation.service.EmailSenderService;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,12 @@ public class BookingController {
     public ResponseEntity<BookingDTO> getBookingById(@PathVariable(name = "id") Long bookingId) {
         BookingDTO bookingDTO = bookingService.getById(bookingId);
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{id}/user")
+    public ResponseEntity<UserDTO> getUserByBookingId(@PathVariable(name = "id") Long bookingId) {
+        UserDTO userDTO = bookingService.getUserByBookingId(bookingId);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
 }
