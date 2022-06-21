@@ -52,4 +52,9 @@ public class RoleController {
         return roleService.saveRoles(roleDTOS);
     }
 
+    @DeleteMapping(value = "/delete/{id}")
+    public String deleteRole(@PathVariable(name = "id") Long roleId) {
+        roleService.deleteRole(roleId);
+        return "Deleted successfully";
+    }
 }
