@@ -28,5 +28,10 @@ public class RoomController {
         return new ResponseEntity<>(roomDTOS, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/available")
+    public ResponseEntity<List<RoomDTO>> getAvailableRooms() {
+        List<RoomDTO> roomDTOS = roomService.listAvailable();
+        return new ResponseEntity<>(roomDTOS, HttpStatus.OK);
+    }
 
 }
