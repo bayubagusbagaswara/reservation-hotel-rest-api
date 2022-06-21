@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -54,5 +55,16 @@ public class DepartmentController {
                 .body(departmentDTOList);
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<DepartmentDTO> updateDepartment(@PathVariable(name = "id") Long departmentId, @RequestBody DepartmentDTO department) {
+        DepartmentDTO result = departmentService.updateDepartment(departmentId, department);
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/department/update/{id}").toUriString());
+        return ResponseEntity.created(uri).body(result);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public String deleteDepartment(@PathVariable(name = "id") Long departmentId) {
+        return departmentService.deleteDepartment(departmentId);
+    }
 
 }
