@@ -81,6 +81,10 @@ public class BookingController {
         }
     }
 
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBooking(@PathVariable(name = "id") Long bookingId) {
+        String s = bookingService.deleteBooking(bookingId);
+        return new ResponseEntity<>(s, HttpStatus.OK);
+    }
 
 }
