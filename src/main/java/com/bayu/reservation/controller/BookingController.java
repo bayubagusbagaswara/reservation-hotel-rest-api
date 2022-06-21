@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -50,6 +51,12 @@ public class BookingController {
     public ResponseEntity<BookingDTO> addBooking(@Valid @RequestBody BookingDTO bookingDTO) {
         BookingDTO save = bookingService.save(bookingDTO);
         return new ResponseEntity<>(save, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/all/room")
+    public ResponseEntity<List<BookingDTO>> fetchBookingsByRoomName(@RequestBody String name) {
+        List<BookingDTO> bookingDTOS = bookingService.getAllByRoomName(name);
+        return new ResponseEntity<>(bookingDTOS, HttpStatus.OK);
     }
 
 }
