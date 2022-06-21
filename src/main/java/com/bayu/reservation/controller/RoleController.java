@@ -1,5 +1,6 @@
 package com.bayu.reservation.controller;
 
+import com.bayu.reservation.dto.ApiResponse;
 import com.bayu.reservation.dto.RoleDTO;
 import com.bayu.reservation.service.RoleService;
 import com.bayu.reservation.service.UserService;
@@ -33,6 +34,12 @@ public class RoleController {
     public ResponseEntity<RoleDTO> findRoleById(@PathVariable(name = "id") Long roleId) {
         RoleDTO roleDTO = roleService.getById(roleId);
         return new ResponseEntity<>(roleDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<ApiResponse> getRoleByName(@PathVariable(name = "name") String name) {
+        RoleDTO roleDTO = roleService.getRoleByName(name);
+        return new ResponseEntity<>(new ApiResponse(200, "OK", "Success get role by name : " + name, roleDTO), HttpStatus.OK);
     }
 
 
