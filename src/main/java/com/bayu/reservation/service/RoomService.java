@@ -3,6 +3,7 @@ package com.bayu.reservation.service;
 import com.bayu.reservation.dto.BookingDTO;
 import com.bayu.reservation.dto.RoomDTO;
 import com.bayu.reservation.dto.UserDTO;
+import com.bayu.reservation.util.Form;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface RoomService {
 
     RoomDTO getRoomByName(String name);
 
-    RoomDTO save();
+    RoomDTO save(Form.RoomForm form);
 
     List<RoomDTO> findAvailable(String startDate, String endDate);
 
