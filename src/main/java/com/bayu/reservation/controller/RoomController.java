@@ -51,9 +51,16 @@ public class RoomController {
         return new ResponseEntity<>(roomDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{id}/bookings")
+    @GetMapping(value = "/{id}/booking")
     public ResponseEntity<List<BookingDTO>> getBookingsByRoom(@PathVariable(name = "id") Long roomId) {
         List<BookingDTO> bookingDTOS = roomService.listBookByRoom(roomId);
         return new ResponseEntity<>(bookingDTOS, HttpStatus.OK);
     }
+
+    @GetMapping("/booking/latest")
+    public ResponseEntity<RoomDTO> fetchLatestReservedRoom() {
+        RoomDTO roomDTO = roomService.getLastReservedRoom();
+        return new ResponseEntity<>(roomDTO, HttpStatus.OK);
+    }
+
 }
