@@ -5,7 +5,9 @@ import com.bayu.reservation.dto.RoomDTO;
 import com.bayu.reservation.service.DepartmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -42,4 +44,15 @@ public class DepartmentController {
         DepartmentDTO departmentDTO = departmentService.getDepartmentByName(name);
         return ResponseEntity.ok().body(departmentDTO);
     }
+
+    @PostMapping(value = "/save/all")
+    public ResponseEntity<List<DepartmentDTO>> addDepartments(@RequestBody List<DepartmentDTO> departmentDTOS) {
+        List<DepartmentDTO> departmentDTOList = departmentService.saveDepartments(departmentDTOS);
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/department/save/all").toUriString());
+        return ResponseEntity
+                .created(uri)
+                .body(departmentDTOList);
+    }
+
+
 }
