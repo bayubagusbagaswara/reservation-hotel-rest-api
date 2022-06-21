@@ -4,10 +4,14 @@ import com.bayu.reservation.dto.BookingDTO;
 import com.bayu.reservation.dto.RoomDTO;
 import com.bayu.reservation.dto.UserDTO;
 import com.bayu.reservation.service.RoomService;
+import com.bayu.reservation.util.Form;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -73,6 +77,13 @@ public class RoomController {
     public ResponseEntity<List<UserDTO>> getUsersByRoom(@PathVariable("id") Long roomId) {
         List<UserDTO> userDTOS = roomService.getUsersByRoom(roomId);
         return new ResponseEntity<>(userDTOS, HttpStatus.OK);
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<RoomDTO> addRoom(@RequestBody Form.RoomForm room) {
+        RoomDTO save = roomService.save(room);
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/room/save").toUriString());
+        return ResponseEntity.created(uri).body(save);
     }
 
 }
