@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -43,6 +44,12 @@ public class BookingController {
     public ResponseEntity<BookingDTO> getBookingByCode(@PathVariable(name = "code") String code) {
         BookingDTO bookingDTO = bookingService.getBookingByCode(code);
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/save")
+    public ResponseEntity<BookingDTO> addBooking(@Valid @RequestBody BookingDTO bookingDTO) {
+        BookingDTO save = bookingService.save(bookingDTO);
+        return new ResponseEntity<>(save, HttpStatus.OK);
     }
 
 }
