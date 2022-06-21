@@ -63,4 +63,10 @@ public class RoomController {
         return new ResponseEntity<>(roomDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/mostly/booked")
+    public ResponseEntity<RoomDTO> getMostBookedRoom() {
+        RoomDTO roomDTO = roomService.mostBookedRoom();
+        return new ResponseEntity<>(roomDTO, HttpStatus.OK);
+    }
+
 }
