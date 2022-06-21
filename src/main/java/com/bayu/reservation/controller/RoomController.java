@@ -92,4 +92,13 @@ public class RoomController {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/room/save/all").toUriString());
         return ResponseEntity.created(uri).body(roomDTOS);
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<RoomDTO> updateRoom(@PathVariable(name = "id") Long roomId, @RequestBody RoomDTO roomDTO) {
+        RoomDTO updateRoom = roomService.updateRoom(roomId, roomDTO);
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/room/{id}").toUriString());
+        return ResponseEntity.created(uri).body(updateRoom);
+    }
+
+
 }
