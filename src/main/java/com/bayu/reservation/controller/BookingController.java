@@ -39,4 +39,10 @@ public class BookingController {
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/code/{code}")
+    public ResponseEntity<BookingDTO> getBookingByCode(@PathVariable(name = "code") String code) {
+        BookingDTO bookingDTO = bookingService.getBookingByCode(code);
+        return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
+    }
+
 }
