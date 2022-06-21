@@ -37,4 +37,9 @@ public class RoomController {
         return new ResponseEntity<>(roomDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/name")
+    public ResponseEntity<RoomDTO> getRoomByName(@RequestParam(name = "name") String name) {
+        RoomDTO roomDTO = roomService.getRoomByName(name);
+        return new ResponseEntity<>(roomDTO, HttpStatus.OK);
+    }
 }
