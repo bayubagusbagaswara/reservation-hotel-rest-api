@@ -42,5 +42,14 @@ public class RoleController {
         return new ResponseEntity<>(new ApiResponse(200, "OK", "Success get role by name : " + name, roleDTO), HttpStatus.OK);
     }
 
+    @PostMapping(value = "/save")
+    public RoleDTO addNewRole(@RequestBody RoleDTO roleDTO) {
+        return roleService.save(roleDTO);
+    }
+
+    @PostMapping(value = "/save/all")
+    public List<RoleDTO> addNewRoles(@RequestBody List<RoleDTO> roleDTOS) {
+        return roleService.saveRoles(roleDTOS);
+    }
 
 }
