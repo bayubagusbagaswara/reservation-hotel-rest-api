@@ -100,5 +100,10 @@ public class RoomController {
         return ResponseEntity.created(uri).body(updateRoom);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public String deleteRoom(@PathVariable(name = "id") Long roomId) {
+        roomService.deleteRoom(roomId);
+        return "Deleted successfully";
+    }
 
 }
