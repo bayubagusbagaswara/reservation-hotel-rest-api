@@ -1,6 +1,7 @@
 package com.bayu.reservation.controller;
 
 import com.bayu.reservation.dto.DepartmentDTO;
+import com.bayu.reservation.dto.RoomDTO;
 import com.bayu.reservation.service.DepartmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,12 @@ public class DepartmentController {
     public ResponseEntity<DepartmentDTO> getDepartmentById(@PathVariable(name = "id") Long departmentId) {
         DepartmentDTO departmentDTO = departmentService.getById(departmentId);
         return ResponseEntity.ok().body(departmentDTO);
+    }
+
+    @GetMapping(value = "/{id}/rooms")
+    public ResponseEntity<List<RoomDTO>> fetchRoomsByDepartmentId(@PathVariable(name = "id") Long departmentId) {
+        List<RoomDTO> roomDTOS = departmentService.getRoomListByDepartmentId(departmentId);
+        return ResponseEntity.ok().body(roomDTOS);
     }
 
 }
