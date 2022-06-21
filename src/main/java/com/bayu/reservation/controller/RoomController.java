@@ -1,11 +1,13 @@
 package com.bayu.reservation.controller;
 
+import com.bayu.reservation.dto.BookingDTO;
 import com.bayu.reservation.dto.RoomDTO;
 import com.bayu.reservation.service.RoomService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -43,10 +45,15 @@ public class RoomController {
         return new ResponseEntity<>(roomDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/availability")
+    @GetMapping(value = "/availability")
     public ResponseEntity<List<RoomDTO>> listAvailableRooms(@RequestParam(name = "start") String start, @RequestParam(name = "end") String end) {
         List<RoomDTO> roomDTOS = roomService.findAvailable(start, end);
         return new ResponseEntity<>(roomDTOS, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/{id}/bookings")
+    public ResponseEntity<List<BookingDTO>> getBookingsByRoom(@PathVariable(name = "id") Long roomId) {
+        List<BookingDTO> bookingDTOS = roomService.listBookByRoom(roomId);
+        return new ResponseEntity<>(bookingDTOS, HttpStatus.OK);
+    }
 }
