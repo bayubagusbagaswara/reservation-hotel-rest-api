@@ -86,4 +86,10 @@ public class RoomController {
         return ResponseEntity.created(uri).body(save);
     }
 
+    @PostMapping("/save/all")
+    public ResponseEntity<List<RoomDTO>> addRooms(@RequestBody List<RoomDTO> rooms) {
+        List<RoomDTO> roomDTOS = roomService.saveRooms(rooms);
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/room/save/all").toUriString());
+        return ResponseEntity.created(uri).body(roomDTOS);
+    }
 }
