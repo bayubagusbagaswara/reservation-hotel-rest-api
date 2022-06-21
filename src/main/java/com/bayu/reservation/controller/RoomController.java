@@ -42,4 +42,11 @@ public class RoomController {
         RoomDTO roomDTO = roomService.getRoomByName(name);
         return new ResponseEntity<>(roomDTO, HttpStatus.OK);
     }
+
+    @GetMapping("/availability")
+    public ResponseEntity<List<RoomDTO>> listAvailableRooms(@RequestParam(name = "start") String start, @RequestParam(name = "end") String end) {
+        List<RoomDTO> roomDTOS = roomService.findAvailable(start, end);
+        return new ResponseEntity<>(roomDTOS, HttpStatus.OK);
+    }
+
 }
