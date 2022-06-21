@@ -29,7 +29,22 @@ public class ApiResponse {
     @JsonProperty("message")
     private String message;
 
+    @JsonProperty("data")
+    private Object data;
+
     @JsonIgnore
     private HttpStatus httpStatus;
 
+    public ApiResponse(Integer code, String status, String message) {
+        this.code = code;
+        this.status = status;
+        this.message = message;
+    }
+
+    public ApiResponse(Integer code, String status, String message, Object data) {
+        this.code = code;
+        this.status = status;
+        this.message = message;
+        this.data = data;
+    }
 }
