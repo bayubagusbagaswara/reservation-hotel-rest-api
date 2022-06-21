@@ -4,6 +4,7 @@ import com.bayu.reservation.dto.ApiResponse;
 import com.bayu.reservation.dto.RoleDTO;
 import com.bayu.reservation.service.RoleService;
 import com.bayu.reservation.service.UserService;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,5 +57,16 @@ public class RoleController {
     public String deleteRole(@PathVariable(name = "id") Long roleId) {
         roleService.deleteRole(roleId);
         return "Deleted successfully";
+    }
+
+    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form) {
+        userService.addRoleToUser(form.getUsername(), form.roleName);
+        return ResponseEntity.ok().build();
+    }
+
+    @Data
+    public static class RoleToUserForm {
+        private String username;
+        private String roleName;
     }
 }
