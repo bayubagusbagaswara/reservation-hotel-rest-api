@@ -37,4 +37,9 @@ public class DepartmentController {
         return ResponseEntity.ok().body(roomDTOS);
     }
 
+    @GetMapping(value = "/name/{name}")
+    public ResponseEntity<DepartmentDTO> getDepartmentByName(@PathVariable(name = "name") String name) {
+        DepartmentDTO departmentDTO = departmentService.getDepartmentByName(name);
+        return ResponseEntity.ok().body(departmentDTO);
+    }
 }
