@@ -59,4 +59,11 @@ public class BookingController {
         return new ResponseEntity<>(bookingDTOS, HttpStatus.OK);
     }
 
+    @GetMapping("/next")
+    public ResponseEntity<String> getNextBooking() {
+        String s = bookingService.nextBooking();
+        return new ResponseEntity<>(s, HttpStatus.OK);
+    }
+
+
 }
