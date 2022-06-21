@@ -65,5 +65,10 @@ public class BookingController {
         return new ResponseEntity<>(s, HttpStatus.OK);
     }
 
+    @PostMapping("/save/all")
+    public ResponseEntity<List<BookingDTO>> addBookings(@RequestBody List<BookingDTO> bookingDTOS) {
+        List<BookingDTO> bookingDTOList = bookingService.saveDepartments(bookingDTOS);
+        return new ResponseEntity<>(bookingDTOList, HttpStatus.OK);
+    }
 
 }
