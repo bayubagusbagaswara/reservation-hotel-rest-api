@@ -147,7 +147,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> fetchUsersByRole(String roleName) {
-        return null;
+        Role role = roleRepository.findByName(roleName);
+        List<User> userList = userRepository.findByRolesId(role.getId());
+        return userConvert.entityToDto(userList);
     }
 
     @Override
