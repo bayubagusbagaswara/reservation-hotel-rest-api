@@ -3,6 +3,7 @@ package com.bayu.reservation.service.impl;
 import com.bayu.reservation.dto.ApiResponse;
 import com.bayu.reservation.dto.BookingDTO;
 import com.bayu.reservation.dto.UserDTO;
+import com.bayu.reservation.entities.Role;
 import com.bayu.reservation.entities.User;
 import com.bayu.reservation.exception.NotFoundException;
 import com.bayu.reservation.mapper.BookingConvert;
@@ -139,7 +140,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addRoleToUser(String username, String roleName) {
-
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("User", "username", username));
+        Role role = roleRepository.findByName(roleName);
+        user.getRoles().add(role);
     }
 
     @Override
