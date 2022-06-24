@@ -106,7 +106,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> saveUsers(List<UserDTO> userDTOS) {
-        return null;
+        List<User> users = userConvert.dtoToEntity(userDTOS);
+        return userConvert.entityToDto(userRepository.saveAll(users));
     }
 
     @Override
