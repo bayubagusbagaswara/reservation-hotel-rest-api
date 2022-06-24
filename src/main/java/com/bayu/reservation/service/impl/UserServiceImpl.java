@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -112,7 +113,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO updateUser(Long id, UserDTO userDTO) {
-        return null;
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User", "id", id));
+
+        if (Objects.nonNull(userDTO.getEmail()) && !"".equalsIgnoreCase(userDTO.getEmail())) {
+            user.setEmail(userDTO.getEmail());
+        }
+        if (Objects.nonNull(userDTO.getPassword()) && !"".equalsIgnoreCase(userDTO.getPassword())) {
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        }
+        if (Objects.nonNull(userDTO.getUsername()) && !"".equalsIgnoreCase(userDTO.getUsername())) {
+            user.setUsername(userDTO.getUsername());
+        }
+
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        userRepository.save(user);
+        return userConvert.entityToDto(user);
     }
 
     @Override
