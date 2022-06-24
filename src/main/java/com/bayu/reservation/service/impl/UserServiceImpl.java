@@ -96,7 +96,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO save(UserDTO userDTO) {
-        return null;
+        User user = userConvert.dtoToEntity(userDTO);
+        user.setRoles(Collections.singleton(roleRepository.findByName(SecurityParams.USER)));
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setActive(true);
+        userRepository.save(user);
+        return userConvert.entityToDto(user);
     }
 
     @Override
