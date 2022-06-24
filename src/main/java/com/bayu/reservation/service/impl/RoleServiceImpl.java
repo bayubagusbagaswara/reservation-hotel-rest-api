@@ -49,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDTO getRoleByName(String name) {
-        return null;
+        return roleConverter.entityToDto(roleRepository.findByName(name));
     }
 
     @Override
