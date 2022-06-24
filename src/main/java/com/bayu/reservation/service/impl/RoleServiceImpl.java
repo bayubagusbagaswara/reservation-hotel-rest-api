@@ -2,6 +2,7 @@ package com.bayu.reservation.service.impl;
 
 import com.bayu.reservation.dto.RoleDTO;
 import com.bayu.reservation.entities.Role;
+import com.bayu.reservation.exception.NotFoundException;
 import com.bayu.reservation.mapper.RoleConvert;
 import com.bayu.reservation.repository.RoleRepository;
 import com.bayu.reservation.service.RoleService;
@@ -42,7 +43,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDTO getRoleById(Long id) {
-        return null;
+        Role role = roleRepository.findById(id).orElseThrow(() -> new NotFoundException("Role", "id", id));
+        return roleConverter.entityToDto(role);
     }
 
     @Override
