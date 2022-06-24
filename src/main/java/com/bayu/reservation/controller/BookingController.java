@@ -35,11 +35,11 @@ public class BookingController {
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{id}/user")
-    public ResponseEntity<UserDTO> getUserByBookingId(@PathVariable(name = "id") Long bookingId) {
-        UserDTO userDTO = bookingService.getUserByBookingId(bookingId);
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
-    }
+//    @GetMapping(value = "/{id}/user")
+//    public ResponseEntity<UserDTO> getUserByBookingId(@PathVariable(name = "id") Long bookingId) {
+//        UserDTO userDTO = bookingService.getUserByBookingId(bookingId);
+//        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+//    }
 
     @GetMapping(value = "/code/{code}")
     public ResponseEntity<BookingDTO> getBookingByCode(@PathVariable(name = "code") String code) {
