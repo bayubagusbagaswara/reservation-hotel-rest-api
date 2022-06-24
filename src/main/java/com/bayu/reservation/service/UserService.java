@@ -2,11 +2,10 @@ package com.bayu.reservation.service;
 
 import com.bayu.reservation.dto.ApiResponse;
 import com.bayu.reservation.dto.UserDTO;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
     List<UserDTO> listAll();
 
