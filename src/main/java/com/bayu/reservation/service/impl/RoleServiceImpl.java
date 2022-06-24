@@ -37,7 +37,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleDTO> listAll() {
-        return null;
+        return roleConverter.entityToDto(roleRepository.findAll());
     }
 
     @Override
