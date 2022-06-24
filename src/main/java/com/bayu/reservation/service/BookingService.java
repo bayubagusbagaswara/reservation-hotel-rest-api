@@ -1,7 +1,7 @@
 package com.bayu.reservation.service;
 
 import com.bayu.reservation.dto.BookingDTO;
-import com.bayu.reservation.dto.UserDTO;
+import com.bayu.reservation.util.Form;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,8 +22,13 @@ public interface BookingService {
 
     List<BookingDTO> getAllByRoomName(String roomName);
 
-    // user
-    UserDTO getUserByBookingId(Long bookingId);
+    String bookRoom(Form.UserBookingForm form, Long id);
+
+    String cancelBooking(Long id, String Code);
+
+    List<BookingDTO> getReservations(Long id);
+
+    List<BookingDTO> getBookingsByUserId(Long id);
 
     BookingDTO save(BookingDTO bookingDTO);
 
