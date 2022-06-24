@@ -1,5 +1,6 @@
 package com.bayu.reservation.controller;
 
+import com.bayu.reservation.dto.ApiResponse;
 import com.bayu.reservation.dto.UserDTO;
 import com.bayu.reservation.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,8 @@ public class AuthController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody UserDTO newUser) {
-        UserDTO userDTO = userService.signUp(newUser);
-        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
+    public ResponseEntity<ApiResponse> registerUser(@Valid @RequestBody UserDTO newUser) {
+        ApiResponse apiResponse = userService.signUp(newUser);
+        return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
     }
 }
