@@ -66,7 +66,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserByUsername(String username) {
-        return null;
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("User", "username", username));
+        return userConvert.entityToDto(user);
     }
 
     @Override
