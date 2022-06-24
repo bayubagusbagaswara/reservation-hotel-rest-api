@@ -1,9 +1,7 @@
 package com.bayu.reservation.service;
 
 import com.bayu.reservation.dto.ApiResponse;
-import com.bayu.reservation.dto.BookingDTO;
 import com.bayu.reservation.dto.UserDTO;
-import com.bayu.reservation.util.Form;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -32,12 +30,5 @@ public interface UserService extends UserDetailsService {
 
     List<UserDTO> fetchUsersByRole(String roleName);
 
-    String bookRoom(Form.UserBookingForm form, Long id);
-
-    String cancelBooking(Long id, String Code);
-
-    List<BookingDTO> getReservations(Long id);
-
-    List<BookingDTO> getBookingsByUserId(Long id);
-
+    UserDTO getUserByBookingId(Long bookingId);
 }
