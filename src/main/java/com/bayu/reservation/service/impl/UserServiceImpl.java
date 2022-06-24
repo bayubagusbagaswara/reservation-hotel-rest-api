@@ -2,15 +2,18 @@ package com.bayu.reservation.service.impl;
 
 import com.bayu.reservation.dto.BookingDTO;
 import com.bayu.reservation.dto.UserDTO;
+import com.bayu.reservation.mapper.BookingConvert;
 import com.bayu.reservation.mapper.UserConvert;
 import com.bayu.reservation.repository.BookingRepository;
 import com.bayu.reservation.repository.RoleRepository;
 import com.bayu.reservation.repository.UserRepository;
 import com.bayu.reservation.service.BookingService;
+import com.bayu.reservation.service.EmailSenderService;
 import com.bayu.reservation.service.UserService;
 import com.bayu.reservation.util.Form;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,16 +24,24 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
     private final BookingRepository bookingRepository;
-
     private final RoleRepository roleRepository;
-
     private final BookingService bookingService;
-
     private final UserConvert userConvert;
+    private final BookingConvert bookingConvert;
+    private final PasswordEncoder passwordEncoder;
+    private final EmailSenderService emailSenderService;
 
-    private final BookingService bookingService;
+    public UserServiceImpl(UserRepository userRepository, BookingRepository bookingRepository, RoleRepository roleRepository, BookingService bookingService, UserConvert userConvert, BookingConvert bookingConvert, PasswordEncoder passwordEncoder, EmailSenderService emailSenderService) {
+        this.userRepository = userRepository;
+        this.bookingRepository = bookingRepository;
+        this.roleRepository = roleRepository;
+        this.bookingService = bookingService;
+        this.userConvert = userConvert;
+        this.bookingConvert = bookingConvert;
+        this.passwordEncoder = passwordEncoder;
+        this.emailSenderService = emailSenderService;
+    }
 
     @Override
     public List<UserDTO> listAll() {
