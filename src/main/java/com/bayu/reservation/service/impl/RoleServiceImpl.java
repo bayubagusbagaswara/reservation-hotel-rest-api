@@ -1,6 +1,8 @@
 package com.bayu.reservation.service.impl;
 
 import com.bayu.reservation.dto.RoleDTO;
+import com.bayu.reservation.entities.Role;
+import com.bayu.reservation.mapper.RoleConvert;
 import com.bayu.reservation.repository.RoleRepository;
 import com.bayu.reservation.service.RoleService;
 import org.springframework.stereotype.Service;
@@ -13,14 +15,18 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
+    private final RoleConvert roleConverter;
 
-    public RoleServiceImpl(RoleRepository roleRepository) {
+    public RoleServiceImpl(RoleRepository roleRepository, RoleConvert roleConverter) {
         this.roleRepository = roleRepository;
+        this.roleConverter = roleConverter;
     }
 
     @Override
     public RoleDTO save(RoleDTO roleDTO) {
-        return null;
+        Role role = roleConverter.dtoToEntity(roleDTO);
+        roleRepository.save(role);
+        return roleConverter.entityToDto(role);
     }
 
     @Override
