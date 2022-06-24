@@ -2,6 +2,7 @@ package com.bayu.reservation.service.impl;
 
 import com.bayu.reservation.dto.BookingDTO;
 import com.bayu.reservation.dto.UserDTO;
+import com.bayu.reservation.entities.User;
 import com.bayu.reservation.mapper.BookingConvert;
 import com.bayu.reservation.mapper.UserConvert;
 import com.bayu.reservation.repository.BookingRepository;
@@ -45,7 +46,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> listAll() {
-        return null;
+        List<User> userList = userRepository.findAll();
+        return userConvert.entityToDto(userList);
     }
 
     @Override
