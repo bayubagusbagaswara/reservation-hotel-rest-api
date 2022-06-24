@@ -31,7 +31,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleDTO> saveRoles(List<RoleDTO> roleDTOS) {
-        return null;
+        List<Role> roles = roleConverter.dtoToEntity(roleDTOS);
+        return roleConverter.entityToDto(roleRepository.saveAll(roles));
     }
 
     @Override
