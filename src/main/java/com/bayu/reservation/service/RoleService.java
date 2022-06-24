@@ -12,7 +12,7 @@ public interface RoleService {
 
     List<RoleDTO> listAll();
 
-    RoleDTO getById(Long id);
+    RoleDTO getRoleById(Long id);
 
     RoleDTO getRoleByName(String name);
 
