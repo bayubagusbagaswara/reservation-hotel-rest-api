@@ -3,6 +3,7 @@ package com.bayu.reservation.service.impl;
 import com.bayu.reservation.dto.BookingDTO;
 import com.bayu.reservation.dto.UserDTO;
 import com.bayu.reservation.entities.User;
+import com.bayu.reservation.exception.NotFoundException;
 import com.bayu.reservation.mapper.BookingConvert;
 import com.bayu.reservation.mapper.UserConvert;
 import com.bayu.reservation.repository.BookingRepository;
@@ -51,8 +52,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getById(Long id) {
-        return null;
+    public UserDTO getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User", "id", id));
+        return userConvert.entityToDto(user);
     }
 
     @Override
