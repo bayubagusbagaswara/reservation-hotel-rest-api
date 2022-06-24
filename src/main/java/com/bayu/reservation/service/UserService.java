@@ -1,5 +1,6 @@
 package com.bayu.reservation.service;
 
+import com.bayu.reservation.dto.ApiResponse;
 import com.bayu.reservation.dto.BookingDTO;
 import com.bayu.reservation.dto.UserDTO;
 import com.bayu.reservation.util.Form;
@@ -17,7 +18,7 @@ public interface UserService extends UserDetailsService {
 
     UserDTO getUserByUsername(String username);
 
-    UserDTO signUp(UserDTO signUpRequest);
+    ApiResponse signUp(UserDTO signUpRequest);
 
     UserDTO save(UserDTO userDTO);
 
