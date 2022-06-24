@@ -60,7 +60,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserByEmail(String email) {
-        return null;
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User", "email", email));
+        return userConvert.entityToDto(user);
     }
 
     @Override
