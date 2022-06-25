@@ -49,7 +49,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<DepartmentDTO> saveDepartments(List<DepartmentDTO> departmentDTOList) {
-        return null;
+        List<Department> departments = departmentConvert.dtoToEntity(departmentDTOList);
+        return departmentConvert.entityToDto(departmentRepository.saveAll(departments));
     }
 
     @Override
