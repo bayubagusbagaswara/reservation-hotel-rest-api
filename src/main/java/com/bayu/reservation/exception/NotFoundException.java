@@ -9,15 +9,19 @@ public class NotFoundException extends RuntimeException {
 
     private transient ApiResponse apiResponse;
 
-    private final String resourceName;
-    private final String fieldName;
-    private final Object fieldValue;
+    private String resourceName;
+    private String fieldName;
+    private Object fieldValue;
 
     public NotFoundException(String resourceName, String fieldName, Object fieldValue) {
         super();
         this.resourceName = resourceName;
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
+    }
+
+    public NotFoundException(String message) {
+        super(message);
     }
 
     public String getResourceName() {
@@ -38,7 +42,7 @@ public class NotFoundException extends RuntimeException {
 
     private void setApiResponse() {
         String message = String.format("%s not found with %s: '%s'", resourceName, fieldName, fieldValue);
-        apiResponse = new ApiResponse(Boolean.FALSE, message);
+        apiResponse = new ApiResponse(message);
     }
 
 }
