@@ -32,28 +32,28 @@ public class UserController {
         return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> findUserById(@PathVariable(name = "id") Long id) {
-        UserDTO userDTO = userService.getById(id);
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
-    }
+//    @GetMapping(value = "/{id}")
+//    public ResponseEntity<UserDTO> findUserById(@PathVariable(name = "id") Long id) {
+//        UserDTO userDTO = userService.getById(id);
+//        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+//    }
 
-    @GetMapping(value = "/bookings")
-    public ResponseEntity<List<BookingDTO>> getReservations() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO loggedInUser = userService.getUserByUsername(auth.getPrincipal().toString());
-        List<BookingDTO> reservations = userService.getReservations(loggedInUser.getId());
-        return new ResponseEntity<>(reservations, HttpStatus.OK);
-    }
+//    @GetMapping(value = "/bookings")
+//    public ResponseEntity<List<BookingDTO>> getReservations() {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        UserDTO loggedInUser = userService.getUserByUsername(auth.getPrincipal().toString());
+//        List<BookingDTO> reservations = userService.getReservations(loggedInUser.getId());
+//        return new ResponseEntity<>(reservations, HttpStatus.OK);
+//    }
 
 
-    @PostMapping(value = "/book")
-    public ResponseEntity<String> bookARoom(@Valid @RequestBody Form.UserBookingForm form) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO loggedInUser = userService.getUserByUsername(auth.getPrincipal().toString());
-        String s = userService.bookRoom(form, loggedInUser.getId());
-        return new ResponseEntity<>(s, HttpStatus.OK);
-    }
+//    @PostMapping(value = "/book")
+//    public ResponseEntity<String> bookARoom(@Valid @RequestBody Form.UserBookingForm form) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        UserDTO loggedInUser = userService.getUserByUsername(auth.getPrincipal().toString());
+//        String s = userService.bookRoom(form, loggedInUser.getId());
+//        return new ResponseEntity<>(s, HttpStatus.OK);
+//    }
 
     @GetMapping(value = "/findEmail/{email}")
     public ResponseEntity<UserDTO> findUserByEmail(@PathVariable(name = "email") String email) {
@@ -75,20 +75,20 @@ public class UserController {
         return ResponseEntity.created(uri).body(userDTOS);
     }
 
-    @DeleteMapping(value = "/booking/cancel/{code}")
-    public ResponseEntity<String> cancelBooking(@PathVariable(name = "code") String code) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO loggedInUser = userService.getUserByUsername(auth.getPrincipal().toString());
-        String string = userService.cancelBooking(loggedInUser.getId(), code);
-        return new ResponseEntity<>(string, HttpStatus.OK);
-    }
+//    @DeleteMapping(value = "/booking/cancel/{code}")
+//    public ResponseEntity<String> cancelBooking(@PathVariable(name = "code") String code) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        UserDTO loggedInUser = userService.getUserByUsername(auth.getPrincipal().toString());
+//        String string = userService.cancelBooking(loggedInUser.getId(), code);
+//        return new ResponseEntity<>(string, HttpStatus.OK);
+//    }
 
     // 1 user bisa nge-booking banyak kamar
-    @GetMapping(value = "/{id}/bookings")
-    public ResponseEntity<List<BookingDTO>> fetchBookingsByUserId(@PathVariable(name = "id") Long userId) {
-        List<BookingDTO> bookingDTOList = userService.getBookingsByUserId(userId);
-        return new ResponseEntity<>(bookingDTOList, HttpStatus.OK);
-    }
+//    @GetMapping(value = "/{id}/bookings")
+//    public ResponseEntity<List<BookingDTO>> fetchBookingsByUserId(@PathVariable(name = "id") Long userId) {
+//        List<BookingDTO> bookingDTOList = userService.getBookingsByUserId(userId);
+//        return new ResponseEntity<>(bookingDTOList, HttpStatus.OK);
+//    }
 
 
     @PutMapping(value = "/update/{id}")
@@ -98,17 +98,17 @@ public class UserController {
         return ResponseEntity.created(uri).body(userDTO);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable(name = "id") Long id) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO loggedInUser = userService.getUserByUsername(auth.getPrincipal().toString());
-        if (loggedInUser.getId().equals(userService.getById(id).getId())) {
-            return ResponseEntity.status(405).body("cannot delete current logged in user");
-        } else {
-            userService.deleteUser(id);
-            return ResponseEntity.ok().body("User deleted !");
-        }
-    }
+//    @DeleteMapping(value = "/delete/{id}")
+//    public ResponseEntity<String> deleteUser(@PathVariable(name = "id") Long id) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        UserDTO loggedInUser = userService.getUserByUsername(auth.getPrincipal().toString());
+//        if (loggedInUser.getId().equals(userService.getById(id).getId())) {
+//            return ResponseEntity.status(405).body("cannot delete current logged in user");
+//        } else {
+//            userService.deleteUser(id);
+//            return ResponseEntity.ok().body("User deleted !");
+//        }
+//    }
 
 
 //    @GetMapping("/token/refresh")
