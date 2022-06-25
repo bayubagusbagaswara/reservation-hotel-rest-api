@@ -30,4 +30,6 @@ public interface UserService {
     List<UserDTO> fetchUsersByRole(String roleName);
 
     UserDTO getUserByBookingId(Long bookingId);
+
+    List<UserDTO> getUsersByRoom(Long roomId);
 }
