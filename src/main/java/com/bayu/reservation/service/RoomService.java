@@ -38,4 +38,6 @@ public interface RoomService {
 
     RoomDTO updateRoom(Long id, RoomDTO roomDTO);
 
+    List<RoomDTO> getRoomListByDepartmentId(Long departmentId);
+
 }
