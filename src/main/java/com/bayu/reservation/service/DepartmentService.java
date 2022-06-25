@@ -9,10 +9,7 @@ public interface DepartmentService {
 
     List<DepartmentDTO> listAll();
 
-    DepartmentDTO getById(Long departmentId);
-
-    // room
-    List<RoomDTO> getRoomListByDepartmentId(Long departmentId);
+    DepartmentDTO getDepartmentById(Long departmentId);
 
     DepartmentDTO getDepartmentByName(String name);
 
