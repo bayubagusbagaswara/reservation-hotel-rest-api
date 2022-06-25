@@ -55,11 +55,11 @@ public class RoomController {
         return new ResponseEntity<>(roomDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{id}/booking")
-    public ResponseEntity<List<BookingDTO>> getBookingsByRoom(@PathVariable(name = "id") Long roomId) {
-        List<BookingDTO> bookingDTOS = roomService.listBookByRoom(roomId);
-        return new ResponseEntity<>(bookingDTOS, HttpStatus.OK);
-    }
+//    @GetMapping(value = "/{id}/booking")
+//    public ResponseEntity<List<BookingDTO>> getBookingsByRoom(@PathVariable(name = "id") Long roomId) {
+//        List<BookingDTO> bookingDTOS = roomService.listBookByRoom(roomId);
+//        return new ResponseEntity<>(bookingDTOS, HttpStatus.OK);
+//    }
 
     @GetMapping("/booking/latest")
     public ResponseEntity<RoomDTO> fetchLatestReservedRoom() {
@@ -73,11 +73,11 @@ public class RoomController {
         return new ResponseEntity<>(roomDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/users")
-    public ResponseEntity<List<UserDTO>> getUsersByRoom(@PathVariable("id") Long roomId) {
-        List<UserDTO> userDTOS = roomService.getUsersByRoom(roomId);
-        return new ResponseEntity<>(userDTOS, HttpStatus.OK);
-    }
+//    @GetMapping("/{id}/users")
+//    public ResponseEntity<List<UserDTO>> getUsersByRoom(@PathVariable("id") Long roomId) {
+//        List<UserDTO> userDTOS = roomService.getUsersByRoom(roomId);
+//        return new ResponseEntity<>(userDTOS, HttpStatus.OK);
+//    }
 
     @PostMapping("/save")
     public ResponseEntity<RoomDTO> addRoom(@RequestBody Form.RoomForm room) {
