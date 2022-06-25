@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -62,6 +63,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDTO updateDepartment(Long departmentId, DepartmentDTO departmentDTO) {
-        return null;
+        Department department = departmentRepository.findById(departmentId).orElseThrow(() -> new NotFoundException("Department", "id", departmentId));
+
+        if (Objects.nonNull(departmentDTO.getName()) && !"".equalsIgnoreCase(departmentDTO.getName())) {
+            department.setName(departmentDTO.getName());
+        }
+        departmentRepository.save(department);
+        return departmentConvert.entityToDto(department);
     }
 }
