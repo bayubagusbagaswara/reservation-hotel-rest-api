@@ -1,6 +1,8 @@
 package com.bayu.reservation.service.impl;
 
 import com.bayu.reservation.dto.DepartmentDTO;
+import com.bayu.reservation.mapper.DepartmentConvert;
+import com.bayu.reservation.repository.DepartmentRepository;
 import com.bayu.reservation.service.DepartmentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +13,17 @@ import java.util.List;
 @Transactional
 public class DepartmentServiceImpl implements DepartmentService {
 
+    private final DepartmentRepository departmentRepository;
+    private final DepartmentConvert departmentConvert;
+
+    public DepartmentServiceImpl(DepartmentRepository departmentRepository, DepartmentConvert departmentConvert) {
+        this.departmentRepository = departmentRepository;
+        this.departmentConvert = departmentConvert;
+    }
+
     @Override
     public List<DepartmentDTO> listAll() {
-        return null;
+        return departmentConvert.entityToDto(departmentRepository.findAll());
     }
 
     @Override
