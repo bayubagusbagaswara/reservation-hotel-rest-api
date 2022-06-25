@@ -206,8 +206,10 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingDTO> getBookingsByUserId(Long id) {
-        return null;
+    public List<BookingDTO> getBookingsByUserId(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User", "id", userId));
+        Collection<Booking> bookings = user.getBookings();
+        return bookingConvert.entityToDto(bookings);
     }
 
     @Override
