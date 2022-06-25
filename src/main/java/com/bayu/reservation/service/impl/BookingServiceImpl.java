@@ -38,7 +38,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void deleteBookingByCode(String code) {
-
+        bookingRepository.deleteByCode(code);
     }
 
     @Override
