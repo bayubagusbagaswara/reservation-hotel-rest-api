@@ -12,6 +12,7 @@ import com.bayu.reservation.util.Form;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +20,8 @@ import java.util.UUID;
 @Service
 @Transactional
 public class BookingServiceImpl implements BookingService {
+
+//    private final static int MIN_VALUE = 100000000;
 
     private final BookingRepository bookingRepository;
     private final BookingConvert bookingConvert;
@@ -67,7 +70,22 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public String nextBooking() {
-        return null;
+        List<Booking> bookings = bookingRepository.findAll();
+        Booking next = new Booking();
+
+        int minValue = 100000000;
+
+        for (Booking booking : bookings) {
+            if (booking.getStartDate().isAfter(LocalDateTime.now()) && booking.isConfirmed()) {
+                int duration = (int) Duration.between(LocalDateTime.now(), booking.getStartDate()).toMinutes();
+                if (duration < minValue) {
+                    minValue = duration;
+                    next = booking;
+                }
+                System.out.println(duration);
+            }
+        }
+        return next.getCode();
     }
 
     @Override
