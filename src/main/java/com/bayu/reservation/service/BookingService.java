@@ -20,7 +20,7 @@ public interface BookingService {
 
     String nextBooking();
 
-    List<BookingDTO> getAllByRoomName(String roomName);
+    List<BookingDTO> getAllBookingsByRoomName(String roomName);
 
     String bookRoom(Form.UserBookingForm form, Long id);
 
@@ -28,7 +28,7 @@ public interface BookingService {
 
     List<BookingDTO> getReservations(Long id);
 
-    List<BookingDTO> getBookingsByUserId(Long id);
+    List<BookingDTO> getBookingsByUserId(Long userId);
 
     BookingDTO save(BookingDTO bookingDTO);
 
