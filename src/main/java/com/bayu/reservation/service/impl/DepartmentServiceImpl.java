@@ -55,7 +55,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public String deleteDepartment(Long id) {
-        return null;
+        Department department = departmentRepository.findById(id).orElseThrow(() -> new NotFoundException("Department", "id", id));
+        departmentRepository.delete(department);
+        return "Deleted Successfully";
     }
 
     @Override
