@@ -1,6 +1,8 @@
 package com.bayu.reservation.service.impl;
 
 import com.bayu.reservation.dto.DepartmentDTO;
+import com.bayu.reservation.entities.Department;
+import com.bayu.reservation.exception.NotFoundException;
 import com.bayu.reservation.mapper.DepartmentConvert;
 import com.bayu.reservation.repository.DepartmentRepository;
 import com.bayu.reservation.service.DepartmentService;
@@ -28,7 +30,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDTO getDepartmentById(Long departmentId) {
-        return null;
+        Department department = departmentRepository.findById(departmentId).orElseThrow(() -> new NotFoundException("Department", "id", departmentId));
+        return departmentConvert.entityToDto(department);
     }
 
     @Override
