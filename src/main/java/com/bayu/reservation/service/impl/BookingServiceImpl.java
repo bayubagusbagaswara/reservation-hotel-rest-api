@@ -1,5 +1,6 @@
 package com.bayu.reservation.service.impl;
 
+import com.bayu.reservation.dto.ApiResponse;
 import com.bayu.reservation.dto.BookingDTO;
 import com.bayu.reservation.dto.UserDTO;
 import com.bayu.reservation.entities.Booking;
@@ -214,7 +215,14 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingDTO save(BookingDTO bookingDTO) {
-        return null;
+        Booking booking = bookingConvert.dtoToEntity(bookingDTO);
+        booking.setCode(UUID.randomUUID().toString());
+
+        Room room = roomRepository.checkAvailability(booking.getStartDate(), booking.getEndDate(), booking.getRoom().getId())
+                .orElseThrow(() -> new NotFoundException("Room already is use"));
+
+        bookingRepository.save(booking);
+        return bookingConvert.entityToDto(booking);
     }
 
     @Override
