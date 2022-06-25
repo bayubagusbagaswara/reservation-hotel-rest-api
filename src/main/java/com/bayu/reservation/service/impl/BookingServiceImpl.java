@@ -1,6 +1,8 @@
 package com.bayu.reservation.service.impl;
 
 import com.bayu.reservation.dto.BookingDTO;
+import com.bayu.reservation.entities.Booking;
+import com.bayu.reservation.exception.NotFoundException;
 import com.bayu.reservation.mapper.BookingConvert;
 import com.bayu.reservation.repository.BookingRepository;
 import com.bayu.reservation.service.BookingService;
@@ -30,7 +32,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingDTO getBookingById(Long bookingId) {
-        return null;
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Booking", "id", bookingId));
+        return bookingConvert.entityToDto(booking);
     }
 
     @Override
