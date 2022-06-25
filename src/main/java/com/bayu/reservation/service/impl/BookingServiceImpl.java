@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -89,8 +91,10 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingDTO> getAllByRoomName(String roomName) {
-        return null;
+    public List<BookingDTO> getAllBookingsByRoomName(String roomName) {
+        Room room = roomRepository.findByName(roomName).orElseThrow(() -> new NotFoundException("Room", "name", roomName));
+        List<Booking> bookings = room.getBookings();
+        return bookingConvert.entityToDto(bookings);
     }
 
     @Override
