@@ -2,11 +2,15 @@ package com.bayu.reservation.service.impl;
 
 import com.bayu.reservation.dto.ApiResponse;
 import com.bayu.reservation.dto.UserDTO;
+import com.bayu.reservation.entities.Booking;
 import com.bayu.reservation.entities.Role;
+import com.bayu.reservation.entities.Room;
 import com.bayu.reservation.entities.User;
 import com.bayu.reservation.exception.NotFoundException;
+import com.bayu.reservation.mapper.RoomConvert;
 import com.bayu.reservation.mapper.UserConvert;
 import com.bayu.reservation.repository.RoleRepository;
+import com.bayu.reservation.repository.RoomRepository;
 import com.bayu.reservation.repository.UserRepository;
 import com.bayu.reservation.security.SecurityParams;
 import com.bayu.reservation.service.UserService;
@@ -14,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -24,12 +29,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final RoomRepository roomRepository;
     private final UserConvert userConvert;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserConvert userConvert, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, RoomRepository roomRepository, UserConvert userConvert, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.roomRepository = roomRepository;
         this.userConvert = userConvert;
         this.passwordEncoder = passwordEncoder;
     }
@@ -142,4 +149,17 @@ public class UserServiceImpl implements UserService {
         return userConvert.entityToDto(user);
     }
 
+    @Override
+    public List<UserDTO> getUsersByRoom(Long roomId) {
+        Room room = roomRepository.findById(roomId).orElseThrow(() -> new NotFoundException("Room", "id", roomId));
+
+        List<Booking> bookings = room.getBookings();
+        List<User> users = new ArrayList<>();
+
+        for (Booking booking : bookings) {
+            users.add(booking.getUser());
+        }
+
+        return userConvert.entityToDto(users);
+    }
 }
