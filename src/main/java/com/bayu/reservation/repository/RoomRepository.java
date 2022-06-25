@@ -25,5 +25,5 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     @Query(value = "select * from (select * from room as ro where ro.id not in "
             + "(select re.room_id from booking as re where (re.start_date BETWEEN ?1 and  ?2) "
             + "or (re.end_date BETWEEN ?1 and ?2))) as roo where roo.id = ?3", nativeQuery = true)
-    Room checkAvailability(LocalDateTime db, LocalDateTime de, Long id);
+    Optional<Room> checkAvailability(LocalDateTime db, LocalDateTime de, Long id);
 }
