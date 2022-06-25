@@ -36,7 +36,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDTO getDepartmentByName(String name) {
-        return null;
+        Department department = departmentRepository.findByName(name).orElseThrow(() -> new NotFoundException("Department", "name", name));
+        return departmentConvert.entityToDto(department);
     }
 
     @Override
