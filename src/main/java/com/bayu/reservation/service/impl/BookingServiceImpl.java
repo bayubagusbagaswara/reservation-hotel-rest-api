@@ -43,7 +43,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingDTO getBookingByCode(String code) {
-        return null;
+        Booking booking = bookingRepository.findByCode(code).orElseThrow(() -> new NotFoundException("Booking", "code", code));
+        return bookingConvert.entityToDto(booking);
     }
 
     @Override
