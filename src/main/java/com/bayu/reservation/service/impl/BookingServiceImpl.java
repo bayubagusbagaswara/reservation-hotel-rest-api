@@ -2,9 +2,11 @@ package com.bayu.reservation.service.impl;
 
 import com.bayu.reservation.dto.BookingDTO;
 import com.bayu.reservation.entities.Booking;
+import com.bayu.reservation.entities.Room;
 import com.bayu.reservation.exception.NotFoundException;
 import com.bayu.reservation.mapper.BookingConvert;
 import com.bayu.reservation.repository.BookingRepository;
+import com.bayu.reservation.repository.RoomRepository;
 import com.bayu.reservation.service.BookingService;
 import com.bayu.reservation.util.Form;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -19,10 +22,12 @@ public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
     private final BookingConvert bookingConvert;
+    private final RoomRepository roomRepository;
 
-    public BookingServiceImpl(BookingRepository bookingRepository, BookingConvert bookingConvert) {
+    public BookingServiceImpl(BookingRepository bookingRepository, BookingConvert bookingConvert, RoomRepository roomRepository) {
         this.bookingRepository = bookingRepository;
         this.bookingConvert = bookingConvert;
+        this.roomRepository = roomRepository;
     }
 
     @Override
@@ -49,7 +54,15 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingDTO bookRoom(String roomName, LocalDateTime startDate, LocalDateTime endDate) {
-        return null;
+        Room room = roomRepository.findByName(roomName).orElseThrow(() -> new NotFoundException("Room", "name", roomName));
+
+        Booking booking = new Booking();
+        booking.setRoom(room);
+        booking.setStartDate(startDate);
+        booking.setEndDate(endDate);
+        booking.setCode(UUID.randomUUID().toString().replace("-",""));
+
+        return bookingConvert.entityToDto(booking);
     }
 
     @Override
