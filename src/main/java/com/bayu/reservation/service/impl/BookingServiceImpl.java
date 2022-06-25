@@ -1,6 +1,8 @@
 package com.bayu.reservation.service.impl;
 
 import com.bayu.reservation.dto.BookingDTO;
+import com.bayu.reservation.mapper.BookingConvert;
+import com.bayu.reservation.repository.BookingRepository;
 import com.bayu.reservation.service.BookingService;
 import com.bayu.reservation.util.Form;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,17 @@ import java.util.List;
 @Transactional
 public class BookingServiceImpl implements BookingService {
 
+    private final BookingRepository bookingRepository;
+    private final BookingConvert bookingConvert;
+
+    public BookingServiceImpl(BookingRepository bookingRepository, BookingConvert bookingConvert) {
+        this.bookingRepository = bookingRepository;
+        this.bookingConvert = bookingConvert;
+    }
+
     @Override
     public List<BookingDTO> listAll() {
-        return null;
+        return bookingConvert.entityToDto(bookingRepository.findAll());
     }
 
     @Override
