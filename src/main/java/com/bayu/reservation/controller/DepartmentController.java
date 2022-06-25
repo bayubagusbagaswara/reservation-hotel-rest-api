@@ -30,15 +30,15 @@ public class DepartmentController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<DepartmentDTO> getDepartmentById(@PathVariable(name = "id") Long departmentId) {
-        DepartmentDTO departmentDTO = departmentService.getById(departmentId);
+        DepartmentDTO departmentDTO = departmentService.getDepartmentById(departmentId);
         return ResponseEntity.ok().body(departmentDTO);
     }
 
-    @GetMapping(value = "/{id}/rooms")
-    public ResponseEntity<List<RoomDTO>> fetchRoomsByDepartmentId(@PathVariable(name = "id") Long departmentId) {
-        List<RoomDTO> roomDTOS = departmentService.getRoomListByDepartmentId(departmentId);
-        return ResponseEntity.ok().body(roomDTOS);
-    }
+//    @GetMapping(value = "/{id}/rooms")
+//    public ResponseEntity<List<RoomDTO>> fetchRoomsByDepartmentId(@PathVariable(name = "id") Long departmentId) {
+//        List<RoomDTO> roomDTOS = departmentService.getRoomListByDepartmentId(departmentId);
+//        return ResponseEntity.ok().body(roomDTOS);
+//    }
 
     @GetMapping(value = "/name/{name}")
     public ResponseEntity<DepartmentDTO> getDepartmentByName(@PathVariable(name = "name") String name) {
