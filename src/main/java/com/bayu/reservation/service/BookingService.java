@@ -10,7 +10,7 @@ public interface BookingService {
 
     List<BookingDTO> listAll();
 
-    BookingDTO getById(Long bookingId);
+    BookingDTO getBookingById(Long bookingId);
 
     void deleteBookingByCode(String code);
 
@@ -37,4 +37,6 @@ public interface BookingService {
     List<BookingDTO> saveDepartments(List<BookingDTO> bookingDTOList);
 
     String deleteBooking(Long bookingId);
+
+    List<BookingDTO> listBooksByRoomId(Long roomId);
 }
