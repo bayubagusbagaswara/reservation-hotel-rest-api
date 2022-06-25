@@ -24,6 +24,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -161,8 +162,40 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public String cancelBooking(Long id, String Code) {
-        return null;
+    public String cancelBooking(Long id, String code) {
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User", "id", id));
+        Collection<Booking> bookings = user.getBookings();
+        Booking booking = bookingRepository.findByCode(code).orElseThrow(() -> new NotFoundException("Booking", "code", code));
+        LocalDateTime now = LocalDateTime.now();
+        if (Objects.isNull(booking)) {
+            return "Please enter your correct reservation code!"; // response 404
+        }
+
+        if (booking.getEndDate().isBefore(now)) {
+            return "You cannot cancel a booking that has already ended!"; // response 405
+        }
+
+        if (bookings.contains(booking)) {
+            booking.getRoom().setReserved(false);
+            user.getBookings().remove(booking);
+            String s = deleteBooking(booking.getId());
+            userRepository.save(user);
+            List<User> users = userConvert.dtoToEntity(userService.fetchUsersByRole(SecurityParams.ADMIN));
+            String Body = "User " + user.getUsername() + " has cancelled the reservation "
+                    + booking.getCode() +
+                    " at " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm")) + " regarding room : " + booking.getRoom().getName();
+
+            for (User user1 : users) {
+                try {
+                    emailSenderService.sendEmail(user1.getEmail(), Body, "Booking cancelled!");
+                } catch (MailException mailException) {
+                    mailException.printStackTrace();
+                }
+            }
+            return s;
+        } else {
+            return "Error deleting reservation that is not yours"; // response 405
+        }
     }
 
     @Override
