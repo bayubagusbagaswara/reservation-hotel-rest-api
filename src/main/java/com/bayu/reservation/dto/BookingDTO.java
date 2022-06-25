@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class BookingDTO {
 
+    private Long id;
+
     @FutureOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     LocalDateTime startDate;
