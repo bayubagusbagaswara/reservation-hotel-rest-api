@@ -47,4 +47,8 @@ public class ApiResponse {
         this.message = message;
         this.data = data;
     }
+
+    public ApiResponse(String message) {
+        this.message = message;
+    }
 }
