@@ -1,9 +1,11 @@
 package com.bayu.reservation.service.impl;
 
 import com.bayu.reservation.dto.RoomDTO;
+import com.bayu.reservation.entities.Department;
 import com.bayu.reservation.entities.Room;
 import com.bayu.reservation.exception.NotFoundException;
 import com.bayu.reservation.mapper.RoomConvert;
+import com.bayu.reservation.repository.DepartmentRepository;
 import com.bayu.reservation.repository.RoomRepository;
 import com.bayu.reservation.service.RoomService;
 import com.bayu.reservation.util.Form;
@@ -19,10 +21,12 @@ public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;
     private final RoomConvert roomConvert;
+    private final DepartmentRepository departmentRepository;
 
-    public RoomServiceImpl(RoomRepository roomRepository, RoomConvert roomConvert) {
+    public RoomServiceImpl(RoomRepository roomRepository, RoomConvert roomConvert, DepartmentRepository departmentRepository) {
         this.roomRepository = roomRepository;
         this.roomConvert = roomConvert;
+        this.departmentRepository = departmentRepository;
     }
 
     @Override
@@ -64,7 +68,13 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomDTO save(Form.RoomForm form) {
-        return null;
+        Department department = departmentRepository.findById(form.getDepartmentId()).orElseThrow(() -> new NotFoundException("Department", "id", form.getDepartmentId()));
+        Room room = new Room();
+        room.setName(form.getName());
+        room.setReserved(false);
+        room.setDepartment(department);
+        roomRepository.save(room);
+        return roomConvert.entityToDto(room);
     }
 
     @Override
