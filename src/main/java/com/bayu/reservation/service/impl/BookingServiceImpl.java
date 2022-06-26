@@ -227,7 +227,11 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void confirmBooking(Long id, boolean isConfirmed) {
-
+        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new NotFoundException("Booking", "id", id));
+        booking.setConfirmed(isConfirmed);
+        bookingRepository.save(booking);
+        booking.getRoom().setCounter(booking.getRoom().getCounter() + 1);
+        roomRepository.save(booking.getRoom());
     }
 
     @Override
