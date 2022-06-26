@@ -1,14 +1,12 @@
 package com.bayu.reservation.controller;
 
 import com.bayu.reservation.dto.DepartmentDTO;
-import com.bayu.reservation.dto.RoomDTO;
 import com.bayu.reservation.service.DepartmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -33,12 +31,6 @@ public class DepartmentController {
         DepartmentDTO departmentDTO = departmentService.getDepartmentById(departmentId);
         return ResponseEntity.ok().body(departmentDTO);
     }
-
-//    @GetMapping(value = "/{id}/rooms")
-//    public ResponseEntity<List<RoomDTO>> fetchRoomsByDepartmentId(@PathVariable(name = "id") Long departmentId) {
-//        List<RoomDTO> roomDTOS = departmentService.getRoomListByDepartmentId(departmentId);
-//        return ResponseEntity.ok().body(roomDTOS);
-//    }
 
     @GetMapping(value = "/name/{name}")
     public ResponseEntity<DepartmentDTO> getDepartmentByName(@PathVariable(name = "name") String name) {
