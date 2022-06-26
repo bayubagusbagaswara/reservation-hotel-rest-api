@@ -9,7 +9,7 @@ public interface RoomService {
 
     List<RoomDTO> listAll();
 
-    List<RoomDTO> listAvailable();
+    List<RoomDTO> listAvailableRooms();
 
     RoomDTO getRoomById(Long roomId);
 
