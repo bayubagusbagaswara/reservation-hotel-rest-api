@@ -91,4 +91,9 @@ public class RoomController {
         return "Deleted successfully";
     }
 
+    @GetMapping(value = "/department/{departmentId}")
+    public ResponseEntity<List<RoomDTO>> getRoomListByDepartmentId(@PathVariable(name = "departmentId") Long departmentId) {
+        List<RoomDTO> roomDTOList = roomService.getRoomListByDepartmentId(departmentId);
+        return new ResponseEntity<>(roomDTOList, HttpStatus.OK);
+    }
 }
