@@ -243,7 +243,9 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public String deleteBooking(Long bookingId) {
-        return null;
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Booking", "id", bookingId));
+        bookingRepository.delete(booking);
+        return "Deleted Successfully";
     }
 
     @Override
