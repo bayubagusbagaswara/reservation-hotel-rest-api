@@ -6,28 +6,28 @@ public class Form {
 
     @Data
     public static class UserBookingForm {
-        private String dateStart;
-        private String dateEnd;
+        private String startDate;
+        private String endDate;
         private String description;
         private String roomName;
     }
 
     @Data
     public static class BookingUpdateForm {
-        private String dateStart;
-        private String dateEnd;
+        private String startDate;
+        private String endDate;
         private String description;
     }
 
     @Data
     public static class DateForm {
-        String start;
-        String end;
+        String startDate;
+        String endDate;
     }
 
     @Data
     public static class RoomForm {
         String name;
-        Long id;
+        Long departmentId;
     }
 }
