@@ -19,7 +19,7 @@ public interface RoomService {
 
     RoomDTO save(Form.RoomForm form);
 
-    List<RoomDTO> findAvailable(String startDate, String endDate);
+    List<RoomDTO> findAvailableRooms(String startDate, String endDate);
 
     // berapa kali room di booking
     RoomDTO mostBookedRoom();
