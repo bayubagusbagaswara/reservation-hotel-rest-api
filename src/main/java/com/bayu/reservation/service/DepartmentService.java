@@ -1,7 +1,6 @@
 package com.bayu.reservation.service;
 
 import com.bayu.reservation.dto.DepartmentDTO;
-import com.bayu.reservation.dto.RoomDTO;
 
 import java.util.List;
 
