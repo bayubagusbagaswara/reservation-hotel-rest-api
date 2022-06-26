@@ -1,10 +1,12 @@
 package com.bayu.reservation.service.impl;
 
 import com.bayu.reservation.dto.RoomDTO;
+import com.bayu.reservation.entities.Booking;
 import com.bayu.reservation.entities.Department;
 import com.bayu.reservation.entities.Room;
 import com.bayu.reservation.exception.NotFoundException;
 import com.bayu.reservation.mapper.RoomConvert;
+import com.bayu.reservation.repository.BookingRepository;
 import com.bayu.reservation.repository.DepartmentRepository;
 import com.bayu.reservation.repository.RoomRepository;
 import com.bayu.reservation.service.RoomService;
@@ -24,11 +26,13 @@ public class RoomServiceImpl implements RoomService {
     private final RoomRepository roomRepository;
     private final RoomConvert roomConvert;
     private final DepartmentRepository departmentRepository;
+    private final BookingRepository bookingRepository;
 
-    public RoomServiceImpl(RoomRepository roomRepository, RoomConvert roomConvert, DepartmentRepository departmentRepository) {
+    public RoomServiceImpl(RoomRepository roomRepository, RoomConvert roomConvert, DepartmentRepository departmentRepository, BookingRepository bookingRepository) {
         this.roomRepository = roomRepository;
         this.roomConvert = roomConvert;
         this.departmentRepository = departmentRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     @Override
@@ -100,7 +104,9 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomDTO getLastReservedRoom() {
-        return null;
+        List<Booking> bookings = bookingRepository.findAll();
+        Booking booking = bookings.get(bookings.size() - 1);
+        return roomConvert.entityToDto(booking.getRoom());
     }
 
     @Override
