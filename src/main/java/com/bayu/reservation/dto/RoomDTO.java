@@ -18,9 +18,9 @@ public class RoomDTO {
 
     private String name;
 
-    boolean reserved = false;
+    private boolean reserved = false;
 
-    int counter = 0;
+    private int counter = 0;
 
     private DepartmentDTO department;
 
