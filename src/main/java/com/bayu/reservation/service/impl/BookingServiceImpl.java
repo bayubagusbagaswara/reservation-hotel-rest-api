@@ -236,7 +236,9 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<BookingDTO> saveDepartments(List<BookingDTO> bookingDTOList) {
-        return null;
+        List<Booking> bookings = bookingConvert.dtoToEntity(bookingDTOList);
+        bookingRepository.saveAll(bookings);
+        return bookingConvert.entityToDto(bookings);
     }
 
     @Override
