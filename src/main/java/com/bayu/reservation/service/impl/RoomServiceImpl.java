@@ -12,6 +12,7 @@ import com.bayu.reservation.util.Form;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,8 +79,11 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<RoomDTO> findAvailable(String startDate, String endDate) {
-        return null;
+    public List<RoomDTO> findAvailableRooms(String startDate, String endDate) {
+        LocalDateTime start = LocalDateTime.parse(startDate);
+        LocalDateTime end = LocalDateTime.parse(endDate);
+        List<Room> roomList = roomRepository.findMeetingRoomAvailable(start, end);
+        return roomConvert.entityToDto(roomList);
     }
 
     @Override
