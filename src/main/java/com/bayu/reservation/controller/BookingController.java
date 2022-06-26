@@ -1,9 +1,14 @@
 package com.bayu.reservation.controller;
 
 import com.bayu.reservation.dto.BookingDTO;
+import com.bayu.reservation.dto.UserDTO;
 import com.bayu.reservation.service.BookingService;
+import com.bayu.reservation.service.UserService;
+import com.bayu.reservation.util.Form;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,9 +20,11 @@ import java.util.List;
 public class BookingController {
 
     private final BookingService bookingService;
+    private final UserService userService;
 
-    public BookingController(BookingService bookingService) {
+    public BookingController(BookingService bookingService, UserService userService) {
         this.bookingService = bookingService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -78,4 +85,45 @@ public class BookingController {
         return new ResponseEntity<>(s, HttpStatus.OK);
     }
 
+    @DeleteMapping(value = "/code/{bookingCode}")
+    public ResponseEntity<String> deleteBookingByCode(@PathVariable(name = "bookingCode") String code) {
+        bookingService.deleteBookingByCode(code);
+        return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
+    }
+
+    @PostMapping("/create/booking/room")
+    public ResponseEntity<String> bookARoom(@RequestBody Form.UserBookingForm form) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO loggedInUser = userService.getUserByUsername(authentication.getPrincipal().toString());
+        String s = bookingService.bookRoom(form, loggedInUser.getId());
+        return new ResponseEntity<>(s, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/booking/cancel/{code}")
+    public ResponseEntity<String> cancelBooking(@PathVariable(name = "code") String code) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO loggedInUser = userService.getUserByUsername(auth.getPrincipal().toString());
+        String s = bookingService.cancelBooking(loggedInUser.getId(), code);
+        return new ResponseEntity<>(s, HttpStatus.OK);
+    }
+
+    @GetMapping("/booking/reservation")
+    public ResponseEntity<List<BookingDTO>> getReservations() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO loggedInUser = userService.getUserByUsername(auth.getPrincipal().toString());
+        List<BookingDTO> reservations = bookingService.getReservations(loggedInUser.getId());
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+
+    @GetMapping("/booking/user/{userId}")
+    public ResponseEntity<List<BookingDTO>> getBookingsByUserId(@PathVariable(name = "userId") Long userId) {
+        List<BookingDTO> bookings = bookingService.getBookingsByUserId(userId);
+        return new ResponseEntity<>(bookings, HttpStatus.OK);
+    }
+
+    @GetMapping("/booking/room/{roomId}")
+    public ResponseEntity<List<BookingDTO>> getBookingsByRoomId(@PathVariable(name = "roomId") Long roomId) {
+        List<BookingDTO> bookingDTOS = bookingService.listBooksByRoomId(roomId);
+        return new ResponseEntity<>(bookingDTOS, HttpStatus.OK);
+    }
 }
