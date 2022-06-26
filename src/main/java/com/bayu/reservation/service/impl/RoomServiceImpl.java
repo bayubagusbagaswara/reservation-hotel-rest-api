@@ -58,7 +58,8 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomDTO getRoomByName(String roomName) {
-        return null;
+        Room room = roomRepository.findByName(roomName).orElseThrow(() -> new NotFoundException("Room", "name", roomName));
+        return roomConvert.entityToDto(room);
     }
 
     @Override
