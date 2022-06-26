@@ -1,5 +1,8 @@
 package com.bayu.reservation.config;
 
+import com.bayu.reservation.security.JwtAuthenticationFilter;
+import com.bayu.reservation.security.JwtAuthorizationFilter;
+import com.bayu.reservation.security.SecurityParams;
 import com.bayu.reservation.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,12 +11,29 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    private static final String[] AUTH_WHITELIST = {
+            // -- Swagger UI v2
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+
+    };
 
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -26,16 +46,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .cors().and().csrf().disable();
 
-//        JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter(authenticationManager());
-//        jwtAuthenticationFilter.setFilterProcessesUrl("/api/auth/login");
-//
-//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http.authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll();
-//        http.authorizeRequests().antMatchers("/api/auth/login/**", "/api/auth/register", "/actuator/**").permitAll();
-//        http.authorizeRequests().antMatchers("/api/**/save/**", "/api/**/**/update", "/api/**/**/delete", "/api/**/all").hasAuthority(SecurityParams.ADMIN);
-//        http.authorizeRequests().anyRequest().authenticated();
-//        http.addFilter(jwtAuthenticationFilter);
-//        http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager());
+        jwtAuthenticationFilter.setFilterProcessesUrl("/api/auth/login");
+
+        http
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers("/api/auth/login/**", "/api/auth/register", "/actuator/**").permitAll()
+                .antMatchers("/api/**/save/**", "/api/**/**/update", "/api/**/**/delete", "/api/**/all").hasAuthority(SecurityParams.ADMIN)
+                .anyRequest().authenticated()
+                .and()
+                .addFilter(jwtAuthenticationFilter)
+                .addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
 
