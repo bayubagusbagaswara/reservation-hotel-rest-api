@@ -49,11 +49,11 @@ public class RoomController {
         return new ResponseEntity<>(roomDTO, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/availability")
-    public ResponseEntity<List<RoomDTO>> listAvailableRooms(@RequestParam(name = "start") String start, @RequestParam(name = "end") String end) {
-        List<RoomDTO> roomDTOS = roomService.findAvailable(start, end);
-        return new ResponseEntity<>(roomDTOS, HttpStatus.OK);
-    }
+//    @GetMapping(value = "/availability")
+//    public ResponseEntity<List<RoomDTO>> listAvailableRooms(@RequestParam(name = "start") String start, @RequestParam(name = "end") String end) {
+//        List<RoomDTO> roomDTOS = roomService.findAvailable(start, end);
+//        return new ResponseEntity<>(roomDTOS, HttpStatus.OK);
+//    }
 
 //    @GetMapping(value = "/{id}/booking")
 //    public ResponseEntity<List<BookingDTO>> getBookingsByRoom(@PathVariable(name = "id") Long roomId) {
