@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -117,7 +118,12 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomDTO updateRoom(Long roomId, RoomDTO roomDTO) {
-        return null;
+        Room room = roomRepository.findById(roomId).orElseThrow(() -> new NotFoundException("Room", "id", roomId));
+        if (Objects.nonNull(roomDTO.getName()) && !"".equalsIgnoreCase(roomDTO.getName())) {
+            room.setName(roomDTO.getName());
+        }
+        roomRepository.save(room);
+        return roomConvert.entityToDto(room);
     }
 
     @Override
