@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Collection;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -73,6 +74,18 @@ public class UserController {
             userService.deleteUser(id);
             return ResponseEntity.ok().body("User deleted !");
         }
+    }
+
+    @GetMapping("/booking/{bookingId}")
+    public ResponseEntity<UserDTO> getUserByBookingId(@PathVariable(name = "bookingId") Long bookingId) {
+        UserDTO userDTO = userService.getUserByBookingId(bookingId);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/room/{roomId}")
+    public ResponseEntity<List<UserDTO>> getUsersByRoom(@PathVariable(name = "roomId") Long roomId) {
+        List<UserDTO> userDTOS = userService.getUsersByRoom(roomId);
+        return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
 
 }
