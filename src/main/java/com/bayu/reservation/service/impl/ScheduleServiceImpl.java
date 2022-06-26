@@ -61,8 +61,28 @@ public class ScheduleServiceImpl implements ScheduleService {
         System.out.println("Ran Job at " + LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
     }
 
+    @Scheduled(cron = "0 0/5 * * * *")
     @Override
     public void job2() {
+        LocalDateTime currentDate = LocalDateTime.now();
+        List<Booking> bookings = bookingRepository.findAll();
+        List<Booking> bookingList = new ArrayList<>();
 
+        for (Booking booking : bookings) {
+            if (booking.getStartDate().plusMinutes(5).isAfter(currentDate)) {
+                bookingList.add(booking);
+                System.out.println(booking.getRoom().getName());
+            }
+        }
+
+        for (Booking activeBooking : bookingList) {
+            if (activeBooking.getStartDate().truncatedTo(ChronoUnit.SECONDS).isEqual(currentDate.truncatedTo(ChronoUnit.SECONDS)) && activeBooking.isConfirmed()) {
+                System.out.println(activeBooking.getRoom().getName());
+                activeBooking.getRoom().setReserved(true);
+                roomRepository.save(activeBooking.getRoom());
+            }
+        }
+        System.out.println("Ran Job 2 at " + LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
     }
+
 }
