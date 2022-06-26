@@ -94,7 +94,7 @@ public class RoomServiceImpl implements RoomService {
         return roomDTOS
                 .stream()
                 .max(Comparator.comparing(RoomDTO::getCounter))
-                .orElse(RoomDTO.builder().counter(0).build())
+                .orElseGet(RoomDTO::new)
                 ;
     }
 
