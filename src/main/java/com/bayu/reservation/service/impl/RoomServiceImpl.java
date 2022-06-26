@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -88,7 +89,13 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomDTO mostBookedRoom() {
-        return null;
+        List<Room> rooms = roomRepository.findAll();
+        List<RoomDTO> roomDTOS = roomConvert.entityToDto(rooms);
+        return roomDTOS
+                .stream()
+                .max(Comparator.comparing(RoomDTO::getCounter))
+                .orElse(RoomDTO.builder().counter(0).build())
+                ;
     }
 
     @Override
