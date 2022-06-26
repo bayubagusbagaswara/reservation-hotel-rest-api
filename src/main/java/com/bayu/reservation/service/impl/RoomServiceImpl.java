@@ -9,6 +9,7 @@ import com.bayu.reservation.util.Form;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,8 +31,15 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<RoomDTO> listAvailable() {
-        return null;
+    public List<RoomDTO> listAvailableRooms() {
+        List<Room> roomList = roomRepository.findAll();
+        List<Room> availableRooms = new ArrayList<>();
+        for (Room room : roomList) {
+            if (!room.isReserved()) {
+                availableRooms.add(room);
+            }
+        }
+        return roomConvert.entityToDto(availableRooms);
     }
 
     @Override
