@@ -128,6 +128,8 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public List<RoomDTO> getRoomListByDepartmentId(Long departmentId) {
-        return null;
+        Department department = departmentRepository.findById(departmentId).orElseThrow(() -> new NotFoundException("Department", "id", departmentId));
+        List<Room> rooms = department.getRoom();
+        return roomConvert.entityToDto(rooms);
     }
 }
