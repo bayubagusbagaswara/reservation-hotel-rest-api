@@ -51,7 +51,9 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public List<RoomDTO> saveRooms(List<RoomDTO> roomDTOList) {
-        return null;
+        List<Room> rooms = roomConvert.dtoToEntity(roomDTOList);
+        roomRepository.saveAll(rooms);
+        return roomConvert.entityToDto(rooms);
     }
 
     @Override
