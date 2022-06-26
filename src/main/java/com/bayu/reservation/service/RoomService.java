@@ -11,11 +11,11 @@ public interface RoomService {
 
     List<RoomDTO> listAvailable();
 
-    RoomDTO getById(Long id);
+    RoomDTO getRoomById(Long roomId);
 
     List<RoomDTO> saveRooms(List<RoomDTO> roomDTOList);
 
-    RoomDTO getRoomByName(String name);
+    RoomDTO getRoomByName(String roomName);
 
     RoomDTO save(Form.RoomForm form);
 
@@ -26,9 +26,9 @@ public interface RoomService {
 
     RoomDTO getLastReservedRoom();
 
-    void deleteRoom(Long id);
+    void deleteRoom(Long roomId);
 
-    RoomDTO updateRoom(Long id, RoomDTO roomDTO);
+    RoomDTO updateRoom(Long roomId, RoomDTO roomDTO);
 
     List<RoomDTO> getRoomListByDepartmentId(Long departmentId);
 
