@@ -111,7 +111,8 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void deleteRoom(Long roomId) {
-
+        Room room = roomRepository.findById(roomId).orElseThrow(() -> new NotFoundException("Room", "id", roomId));
+        roomRepository.delete(room);
     }
 
     @Override
