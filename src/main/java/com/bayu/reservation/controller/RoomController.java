@@ -31,17 +31,17 @@ public class RoomController {
         return new ResponseEntity<>(roomDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/available")
-    public ResponseEntity<List<RoomDTO>> getAvailableRooms() {
-        List<RoomDTO> roomDTOS = roomService.listAvailable();
-        return new ResponseEntity<>(roomDTOS, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<RoomDTO> getRoomById(@PathVariable(name = "id") Long roomId) {
-        RoomDTO roomDTO = roomService.getById(roomId);
-        return new ResponseEntity<>(roomDTO, HttpStatus.OK);
-    }
+//    @GetMapping(value = "/available")
+//    public ResponseEntity<List<RoomDTO>> getAvailableRooms() {
+//        List<RoomDTO> roomDTOS = roomService.listAvailable();
+//        return new ResponseEntity<>(roomDTOS, HttpStatus.OK);
+//    }
+//
+//    @GetMapping(value = "/{id}")
+//    public ResponseEntity<RoomDTO> getRoomById(@PathVariable(name = "id") Long roomId) {
+//        RoomDTO roomDTO = roomService.getById(roomId);
+//        return new ResponseEntity<>(roomDTO, HttpStatus.OK);
+//    }
 
     @GetMapping("/name")
     public ResponseEntity<RoomDTO> getRoomByName(@RequestParam(name = "name") String name) {
