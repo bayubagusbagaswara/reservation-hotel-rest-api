@@ -2,6 +2,7 @@ package com.bayu.reservation.service.impl;
 
 import com.bayu.reservation.dto.RoomDTO;
 import com.bayu.reservation.entities.Room;
+import com.bayu.reservation.exception.NotFoundException;
 import com.bayu.reservation.mapper.RoomConvert;
 import com.bayu.reservation.repository.RoomRepository;
 import com.bayu.reservation.service.RoomService;
@@ -44,7 +45,8 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomDTO getRoomById(Long roomId) {
-        return null;
+        Room room = roomRepository.findById(roomId).orElseThrow(() -> new NotFoundException("Room not available"));
+        return roomConvert.entityToDto(room);
     }
 
     @Override
